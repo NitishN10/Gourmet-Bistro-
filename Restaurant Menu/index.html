@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gourmet Bistro | Artisanal Dining Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #C19A6B;
+            --primary-dark: #A67C52;
+            --accent: #8B4513;
+            --dark: #2C1810;
+            --light: #FDF6E3;
+            --gray: #8B7D6B;
+            --success: #27AE60;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FDF6E3 0%, #F8F4E9 100%);
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(rgba(44, 24, 16, 0.9), rgba(44, 24, 16, 0.8)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--light);
+            padding: 4rem 0 3rem;
+            text-align: center;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, #FDF6E3);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .restaurant-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .info-item i {
+            color: var(--primary);
+        }
+
+        /* Navigation */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .category-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--dark);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(193, 154, 107, 0.3);
+        }
+
+        /* Menu Sections */
+        .menu-section {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            display: inline-block;
+            padding: 0 2rem;
+            background: var(--light);
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            z-index: 1;
+        }
+
+        .section-description {
+            max-width: 600px;
+            margin: 1rem auto 0;
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Menu Items Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .menu-item.featured::before {
+            content: 'Chef\'s Special';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--success);
+            color: white;
+            padding: 0.3rem 3rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(39, 174, 96, 0.3);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--primary-dark), var(--accent));
+            opacity: 0.7;
+        }
+
+        .item-content {
+            padding: 1.5rem;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+
+        .item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.3;
+        }
+
+        .item-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            white-space: nowrap;
+            margin-left: 1rem;
+        }
+
+        .item-description {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .item-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .item-tag {
+            background: rgba(193, 154, 107, 0.1);
+            color: var(--primary-dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .item-tag.vegetarian {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success);
+        }
+
+        .item-tag.spicy {
+            background: rgba(231, 76, 60, 0.1);
+            color: #E74C3C;
+        }
+
+        .item-tag.gluten-free {
+            background: rgba(155, 89, 182, 0.1);
+            color: #9B59B6;
+        }
+
+        /* Special Items */
+        .special-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .special-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            color: white;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .special-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .special-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+        }
+
+        .special-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .special-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .special-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .special-description {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .special-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .footer-section p, .footer-section a {
+            color: var(--gray);
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .category-nav {
+                padding: 1rem;
+            }
+            
+            .category-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .restaurant-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Animation Delays */
+        .menu-section:nth-child(1) { animation-delay: 0.1s; }
+        .menu-section:nth-child(2) { animation-delay: 0.2s; }
+        .menu-section:nth-child(3) { animation-delay: 0.3s; }
+        .menu-section:nth-child(4) { animation-delay: 0.4s; }
+        .menu-section:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Gourmet Bistro</h1>
+            <p class="tagline">Where culinary artistry meets warm hospitality in an intimate dining experience</p>
+            
+            <div class="restaurant-info">
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>123 Culinary Avenue, Food District</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <span>(555) 123-4567</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Open Daily: 5PM - 11PM</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav class="category-nav">
+            <button class="category-btn active" data-category="all">All Menu</button>
+            <button class="category-btn" data-category="appetizers">Appetizers</button>
+            <button class="category-btn" data-category="mains">Main Courses</button>
+            <button class="category-btn" data-category="desserts">Desserts</button>
+            <button class="category-btn" data-category="drinks">Drinks</button>
+        </nav>
+
+        <!-- Appetizers Section -->
+        <section class="menu-section" id="appetizers">
+            <div class="section-header">
+                <h2>Appetizers</h2>
+                <p class="section-description">Begin your culinary journey with our exquisite starters, crafted to awaken your palate</p>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-item featured">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Truffle Arancini</h3>
+                            <span class="item-price">$16</span>
+                        </div>
+                        <p class="item-description">Crispy risotto balls infused with black truffle and fontina cheese, served with wild mushroom sauce</p>
+                        <div class="item-tags">
+                            <span class="item-tag vegetarian">Vegetarian</span>
+                            <span class="item-tag">Signature</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Seared Scallops</h3>
+                            <span class="item-price">$22</span>
+                        </div>
+                        <p class="item-description">Day boat scallops with cauliflower purée, crispy pancetta, and brown butter emulsion</p>
+                        <div class="item-tags">
+                            <span class="item-tag">Customization Availaible</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Burrata Caprese</h3>
+                            <span class="item-price">$18</span>
+                        </div>
+                        <p class="item-description">Creamy burrata with heirloom tomatoes, basil oil, and aged balsamic reduction</p>
+                        <div class="item-tags">
+                            <span class="item-tag vegetarian">Vegetarian</span>
+                            <span class="item-tag gluten-free">Gluten Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Courses Section -->
+        <section class="menu-section" id="mains">
+            <div class="section-header">
+                <h2>Main Courses</h2>
+                <p class="section-description">Our chef's masterpiece creations featuring the finest ingredients and innovative techniques</p>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-item featured">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Sushi</h3>
+                            <span class="item-price">$15</span>
+                        </div>
+                        <p class="item-description">Traditional Japanese Sushi</p>
+                        <div class="item-tags">
+                            <span class="item-tag">Chef's Special</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Lobster Thermidor</h3>
+                            <span class="item-price">$42</span>
+                        </div>
+                        <p class="item-description">Whole Maine lobster with brandy cream sauce, gruyère cheese, and herb breadcrumbs</p>
+                        <div class="item-tags">
+                            <span class="item-tag">Market Price</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Wild Mushroom Risotto</h3>
+                            <span class="item-price">$26</span>
+                        </div>
+                        <p class="item-description">Arborio rice with seasonal wild mushrooms, white wine, parmesan, and truffle oil</p>
+                        <div class="item-tags">
+                            <span class="item-tag vegetarian">Vegetarian</span>
+                            <span class="item-tag gluten-free">Gluten Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="special-items">
+                <div class="special-card">
+                    <div class="special-header">
+                        <h3 class="special-name">Chef's Tasting Menu</h3>
+                        <span class="special-price">$95</span>
+                    </div>
+                    <p class="special-description">A curated five-course journey showcasing seasonal ingredients and culinary innovation</p>
+                    <span class="special-tag">Reservation Required</span>
+                </div>
+
+                <div class="special-card">
+                    <div class="special-header">
+                        <h3 class="special-name">Wine Pairing</h3>
+                        <span class="special-price">$55</span>
+                    </div>
+                    <p class="special-description">Expertly selected wines to complement each course of the tasting menu</p>
+                    <span class="special-tag">Sommelier's Choice</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Desserts Section -->
+        <section class="menu-section" id="desserts">
+            <div class="section-header">
+                <h2>Desserts</h2>
+                <p class="section-description">Sweet finales crafted by our pastry chef to complete your dining experience</p>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Chocolate Soufflé</h3>
+                            <span class="item-price">$14</span>
+                        </div>
+                        <p class="item-description">Warm dark chocolate soufflé with vanilla bean ice cream and cocoa nibs</p>
+                        <div class="item-tags">
+                            <span class="item-tag">20 min preparation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item featured">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Lavender Crème Brûlée</h3>
+                            <span class="item-price">$12</span>
+                        </div>
+                        <p class="item-description">Classic vanilla custard infused with lavender, topped with caramelized sugar</p>
+                        <div class="item-tags">
+                            <span class="item-tag vegetarian">Vegetarian</span>
+                            <span class="item-tag gluten-free">Gluten Free</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Seasonal Fruit Tart</h3>
+                            <span class="item-price">$13</span>
+                        </div>
+                        <p class="item-description">Almond crust filled with pastry cream and topped with market-fresh fruits</p>
+                        <div class="item-tags">
+                            <span class="item-tag vegetarian">Vegetarian</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Drinks Section -->
+        <section class="menu-section" id="drinks">
+            <div class="section-header">
+                <h2>Beverages</h2>
+                <p class="section-description">Carefully curated selection of wines, cocktails, and non-alcoholic refreshments</p>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Signature Cocktails</h3>
+                            <span class="item-price">$15</span>
+                        </div>
+                        <p class="item-description">Ask your server about our seasonal craft cocktails featuring house-made infusions</p>
+                        <div class="item-tags">
+                            <span class="item-tag">Seasonal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Wine Selection</h3>
+                            <span class="item-price">$12-$25</span>
+                        </div>
+                        <p class="item-description">Global wine list featuring old-world classics and new-world discoveries by the glass</p>
+                        <div class="item-tags">
+                            <span class="item-tag">Extensive List</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="item-image"></div>
+                    <div class="item-content">
+                        <div class="item-header">
+                            <h3 class="item-name">Artisanal Coffee & Tea</h3>
+                            <span class="item-price">$6-$8</span>
+                        </div>
+                        <p class="item-description">Specialty coffee and premium loose-leaf tea selection to complement your dessert</p>
+                        <div class="item-tags">
+                            <span class="item-tag">Local Roaster</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Gourmet Bistro</h3>
+                    <p>Experience culinary excellence in an intimate setting where every detail matters.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Culinary Avenue, Food District</p>
+                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@gourmetbistro.com</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hours</h3>
+                    <p>Monday - Thursday: 5PM - 10PM</p>
+                    <p>Friday - Saturday: 5PM - 11PM</p>
+                    <p>Sunday: 5PM - 9PM</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Gourmet Bistro. All rights reserved. | Crafted with passion for exceptional dining</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Category Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const menuSections = document.querySelectorAll('.menu-section');
+            
+            // Filter menu sections
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    if (category === 'all') {
+                        // Show all sections
+                        menuSections.forEach(section => {
+                            section.style.display = 'block';
+                            setTimeout(() => {
+                                section.style.opacity = '1';
+                                section.style.transform = 'translateY(0)';
+                            }, 10);
+                        });
+                    } else {
+                        // Show only selected category
+                        menuSections.forEach(section => {
+                            if (section.id === category) {
+                                section.style.display = 'block';
+                                setTimeout(() => {
+                                    section.style.opacity = '1';
+                                    section.style.transform = 'translateY(0)';
+                                }, 10);
+                            } else {
+                                section.style.opacity = '0';
+                                section.style.transform = 'translateY(20px)';
+                                setTimeout(() => {
+                                    section.style.display = 'none';
+                                }, 300);
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Add scroll animation
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+            
+            menuSections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
